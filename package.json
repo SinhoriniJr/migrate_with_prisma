@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "prisma": "prisma"    
+    "prisma": "prisma",
+    "start": "node index.js",
+    "build": "prisma generate"
   },
   "keywords": [],
   "author": "",
