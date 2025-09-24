@@ -18,6 +18,27 @@ app.get("/users", async (req, res) => {
     res.json(users);
 });
 
+app.get("/health", async (req, res) => {
+    res.status(200).json({
+        status: "OK", uptime: process.uptime()
+    })
+});
+
+app.get("/user/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await prisma.user.findUnique({
+            where: { id: Number(id)},
+        });
+        if(!user){
+            return resizeTo.status(404).json({ error: "Usuário não encontrado"});
+        }
+        res.json(user);
+
+    } catch(error){
+        res.status(500).json({ error: " Erro ao buscar usuário", details: error.message });
+    }
+});
 app.listen(3000, () => {
     console.log("Server running on http://localhost:3000");
 });
